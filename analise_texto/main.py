@@ -51,8 +51,18 @@ class sentimental_text:
         return sentiment_score['compound']
 
 if __name__ == '__main__':
-    text = "Eu amo python, melhor linguagem !"
-
     s_text = sentimental_text(language='english',translate=True) 
+
+    print('---------------------------------------')
+    text = "Eu odeio python, pior linguagem !"
+    print(text)
     sentiment_score = s_text.sentimento(text)
     print(sentiment_score)
+
+    print('---------------------------------------')
+
+    text = "j'aime python, meilleur langage"
+    print(text)
+    sentiment_score = s_text.sentimento(text)
+    print(sentiment_score)
+    print('---------------------------------------')
