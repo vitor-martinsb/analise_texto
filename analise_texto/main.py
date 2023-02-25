@@ -3,6 +3,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.sentiment import SentimentIntensityAnalyzer
 from deep_translator import GoogleTranslator
+import re
+import pandas as pd 
 
 nltk.download('stopwords')
 sia = SentimentIntensityAnalyzer()
@@ -30,6 +32,16 @@ class sentimental_text:
             frase = GoogleTranslator(source='auto', target=self.language).translate(frase)
 
         stop_words = set(stopwords.words(self.language))
+        emoji_pattern = re.compile("["
+                                    u"\U0001F600-\U0001F64F"  # emoticons
+                                    u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                                    u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                                    u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                                    "]+", flags=re.UNICODE)
+        frase = emoji_pattern.sub(r'', frase) # remove emojis
+        word_tokens = word_tokenize(frase.lower())
+        filtered_sentence = [word for word in word_tokens if word.isalnum() and word not in stop_words]
+        return ' '.join(filtered_sentence)
         word_tokens = word_tokenize(frase.lower())
         filtered_sentence = [word for word in word_tokens if word.isalnum() and word not in stop_words]
         return ' '.join(filtered_sentence)
@@ -51,8 +63,10 @@ class sentimental_text:
         return sentiment_score['compound']
 
 if __name__ == '__main__':
-    text = "Eu amo python, melhor linguagem !"
 
+    df = pd.read_json('teste.json')
     s_text = sentimental_text(language='english',translate=True) 
-    sentiment_score = s_text.sentimento(text)
-    print(sentiment_score)
+
+    for comment in df['comments']:
+        sentiment_score = s_text.sentimento
+        print(sentiment_score)
