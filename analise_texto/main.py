@@ -42,9 +42,6 @@ class sentimental_text:
         word_tokens = word_tokenize(frase.lower())
         filtered_sentence = [word for word in word_tokens if word.isalnum() and word not in stop_words]
         return ' '.join(filtered_sentence)
-        word_tokens = word_tokenize(frase.lower())
-        filtered_sentence = [word for word in word_tokens if word.isalnum() and word not in stop_words]
-        return ' '.join(filtered_sentence)
 
     def sentimento(self,frase=''):
         
@@ -64,9 +61,9 @@ class sentimental_text:
 
 if __name__ == '__main__':
 
-    df = pd.read_json('teste.json')
+    comments = ["Tenho muito medo disso", "Deus nos abandonou", "Na prática, eu gostei muito dessa ideia", "Eu não sei o que sentir a respeito desse tema."]
     s_text = sentimental_text(language='english',translate=True) 
 
-    for comment in df['comments']:
-        sentiment_score = s_text.sentimento
+    for comment in comments:
+        sentiment_score = s_text.sentimento(comment)
         print(sentiment_score)
