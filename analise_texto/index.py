@@ -44,7 +44,6 @@ class sentimental_text:
         filtered_sentence = []
         if self.translate:
             sentence_tokens = [GoogleTranslator(source='auto', target=self.language).translate(sentence) for sentence in sentence_tokens]
-        for sentence in sentence_tokens:
             for sentence in sentence_tokens:
                 word_tokens = word_tokenize(sentence)
                 filtered_sentence.extend([word for word in word_tokens if word.isalnum() and word not in stop_words])
